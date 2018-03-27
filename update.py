@@ -11,7 +11,7 @@ while True:
     img=link.getSensorImage()
     c=db.cursor()
     c.execute("""
-insert into raw (
+insert into image (
     timestamp, 
     WindSpeed, 
     AverageWindSpeed,
@@ -21,15 +21,12 @@ insert into raw (
     OutdoorTemperature,
     OutdoorRelativeHumidity,
     QFE,
-    QFETrend,
-    Forecast,
     RainRate,
     RainDay,
     OutdoorDewpoint) 
-values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+values (datetime('now'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """, 
-    (img.Timestamp, 
-    img.WindSpeed, 
+    (img.WindSpeed, 
     img.AverageWindSpeed,
     img.WindDirection,
     img.IndoorTemperature,
@@ -37,8 +34,6 @@ values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     img.OutdoorTemperature,
     img.OutdoorRelativeHumidity,
     img.QFE,
-    img.QFETrend,
-    img.Forecast,
     img.RainRate,
     img.RainDay,
     img.OutdoorDewpoint)) 
@@ -46,4 +41,4 @@ values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 
     print img
 
-    sleep(2)
+    sleep(10)

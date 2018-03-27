@@ -1,5 +1,5 @@
 
-create table if not exists raw (
+create table if not exists image (
     timestamp                   INTEGER,
     
     WindSpeed                   FLOAT,
@@ -10,13 +10,10 @@ create table if not exists raw (
     OutdoorTemperature          FLOAT,
     OutdoorRelativeHumidity     FLOAT,
     QFE                         FLOAT,
-    QFETrend                    FLOAT,
-    Forecast                    FLOAT,
-    
     RainRate                    FLOAT,
     RainDay                     FLOAT,
     
     OutdoorDewpoint             FLOAT
 );
 
-create index if not exists timestamp on raw (timestamp);
+create index if not exists timestamp on image (timestamp);
