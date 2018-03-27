@@ -28,7 +28,7 @@ from datatypes import SensorImage#, ArchiveImage
 from crc import CRC_CCITT
 
 class Link:
-    def __init__(self, dev = '/dev/ttyS0', baud = 19200):
+    def __init__(self, dev = '/dev/ttyAMA0', baud = 19200):
         self.__ser = serial.Serial(dev, baud, timeout = 2)
         self.wakeup()
         self.setTime()

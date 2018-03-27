@@ -18,7 +18,7 @@
 
 """
 
-import numpy as np
+from math import log
 
 def f2c(f):
     c = (f-32) * (5.0/9.0)
@@ -36,7 +36,7 @@ a = 17.271
 b = 237.7 # degC
 
 def gamma(T,RH):
-    g = (a * T / (b + T)) + np.log(RH/100.0)
+    g = (a * T / (b + T)) + log(RH/100.0)
     return g
 
 def dewpoint_approximation(T, RH):

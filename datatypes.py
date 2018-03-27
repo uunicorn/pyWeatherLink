@@ -78,4 +78,9 @@ class SensorImage:
     OutdoorTemperature = property(__getotemp, __setotemp)
 
     def __str__(self):
-        return "itemp: %.2f\notemp: %.2f\nwd: %i\nws: %.2f" % (self.IndoorTemperature, self.OutdoorTemperature, self.WindDirection, self.WindSpeed)
+        return """itemp: %.2f
+otemp: %.2f
+odewp: %.2f
+wd: %i
+ws: %.2f
+""" % (self.IndoorTemperature, self.OutdoorTemperature, self.OutdoorDewpoint, self.WindDirection, self.WindSpeed)
