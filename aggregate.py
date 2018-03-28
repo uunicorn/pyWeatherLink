@@ -48,7 +48,7 @@ db.create_aggregate('WindAvgSpeed', 2, WindAvgSpeed)
 db.create_aggregate('WindAvgDirection', 2, WindAvgDirection)
 
 sql="""
-select max(timestamp), 
+select
     max(WindSpeed),
     WindAvgSpeed(WindDirection, AverageWindSpeed),
     WindAvgDirection(WindDirection, AverageWindSpeed),
@@ -83,7 +83,7 @@ insert into image (
     RainRate,
     RainDay,
     OutdoorDewpoint
-) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+) values (datetime('now'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """
 db.cursor().execute(sql, result);
 db.commit()
