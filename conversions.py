@@ -26,7 +26,7 @@ def f2c(f):
 
 def mph2kts(mph):
     kts = mph * 0.868976242
-    return int(round(kts, 0))
+    return round(kts, 2)
 
 def inHg2hPa(inHg):
     return inHg * 33.8638816

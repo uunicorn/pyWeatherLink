@@ -16,9 +16,10 @@ class WindAvg:
         self.n = 0
 
     def step(self, direction, speed):
-        self.x = self.x + speed*math.sin(math.radians(direction))
-        self.y = self.y + speed*math.cos(math.radians(direction))
-        self.n = self.n + 1
+        if direction and speed:
+            self.x = self.x + speed*math.sin(math.radians(direction))
+            self.y = self.y + speed*math.cos(math.radians(direction))
+            self.n = self.n + 1
 
     def avg_x(self):
         return self.x / self.n
@@ -27,10 +28,22 @@ class WindAvg:
         return self.y / self.n
 
     def speed(self):
-        return math.sqrt(math.pow(self.avg_x(), 2) + math.pow(self.avg_y(), 2))
+        if self.n > 0:
+            return math.sqrt(math.pow(self.avg_x(), 2) + math.pow(self.avg_y(), 2))
+        else:
+            return None
 
     def direction(self):
-        return math.degrees(math.atan2(self.avg_x(), self.avg_y()))
+        if self.n > 0:
+            if self.speed() > 0:
+                deg = math.degrees(math.atan2(self.avg_x(), self.avg_y()))
+                if deg < 0:
+                    deg = deg + 360
+                return deg
+            else:
+                return 0
+        else:
+            return None
 
 class WindAvgSpeed(WindAvg):
     def finalize(self):
@@ -38,10 +51,7 @@ class WindAvgSpeed(WindAvg):
 
 class WindAvgDirection(WindAvg):
     def finalize(self):
-        if self.speed() > 0:
-            return self.direction()
-        else:
-            return 0
+        return self.direction()
 
 
 db.create_aggregate('WindAvgSpeed', 2, WindAvgSpeed)

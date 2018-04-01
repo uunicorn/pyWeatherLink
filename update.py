@@ -1,11 +1,16 @@
 
 from communication import Link
 from time import sleep
+import sys
 import sqlite3
 
 link = Link()
 
-db = sqlite3.connect('raw.sqlite3')
+if len(sys.argv) < 3:
+    print 'Usage: update.py <file.sqlite3> <delay>'
+    sys.exit(1)
+
+db = sqlite3.connect(sys.argv[1])
 
 while True:
     img=link.getSensorImage()
@@ -41,4 +46,4 @@ values (datetime('now'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 
     print img
 
-    sleep(10)
+    sleep(int(sys.argv[2]))

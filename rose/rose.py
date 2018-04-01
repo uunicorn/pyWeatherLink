@@ -66,13 +66,15 @@ class Rose(object):
         self.draw.text(text, txt, fill=(0, 0, 0, 255))
 
     def rose(self, raw):
-        self.max_kn = ceil(max([1] + [i[1] for i in raw])/5)*5
-        raw = [(dir, kn/self.max_kn) for (dir, kn) in raw if dir and kn]
-        last = raw[0]
+        self.max_kn = ceil(max([1] + [i[1] for i in raw])/5.0)*5
 
-        for data in raw[1:]:
-            self.im = self.paint(self.im, last, data)
-            last = data
+        if self.max_kn > 0:
+            raw = [(dir, kn/self.max_kn) for (dir, kn) in raw if dir and kn]
+            last = raw[0]
+
+            for data in raw[1:]:
+                self.im = self.paint(self.im, last, data)
+                last = data
         
         self.grid()
 
