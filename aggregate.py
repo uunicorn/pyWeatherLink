@@ -14,11 +14,13 @@ class WindAvg:
         self.x = 0
         self.y = 0
         self.n = 0
+        self.last_dir = 0
 
     def step(self, direction, speed):
-        if direction and speed:
+        if direction != None and speed != None:
             self.x = self.x + speed*math.sin(math.radians(direction))
             self.y = self.y + speed*math.cos(math.radians(direction))
+            self.last_dir = direction
             self.n = self.n + 1
 
     def avg_x(self):
@@ -41,7 +43,7 @@ class WindAvg:
                     deg = deg + 360
                 return deg
             else:
-                return 0
+                return self.last_dir
         else:
             return None
 
