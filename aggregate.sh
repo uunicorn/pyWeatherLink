@@ -28,7 +28,7 @@ python render-rose.py "$AGG5MIN" "$TEMP/rose.png" '-1 hour'
 cd $TEMP
 
 TS="strftime('%Y-%m-%dT%H:%M:%S', timestamp)"
-FROM="from image where timestamp > date('now', '-2 day')"
+FROM="from image where timestamp > datetime('now', '-1 day')"
 
 sqlite3 -separator ' ' -nullvalue '?' "$AGG5MIN" \
     "select $TS,                    -- 1
