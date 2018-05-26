@@ -21,6 +21,8 @@ test -f "$AGG5MIN" || sqlite3 "$AGG5MIN" < schema.sql
 
 time python aggregate.py "$RAW" "$AGG5MIN" '-5 minute'
 
+time python render-report.py "$AGG5MIN" "$TEMP/report.png"
+
 cd rose
 
 python render-rose.py "$AGG5MIN" "$TEMP/rose.png" '-1 hour'
