@@ -12,7 +12,7 @@ sql="""
 select WindDirection, AverageWindSpeed 
 from image 
 where timestamp > datetime('now', ?) 
-order by timestamp desc
+order by timestamp asc
 """
 result = db.cursor().execute(sql, (sys.argv[3],)).fetchall()
 
