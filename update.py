@@ -67,6 +67,6 @@ values (datetime('now'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     })
     url='https://rtupdate.wunderground.com/weatherstation/updateweatherstation.php?' + params
     
-    os.system('curl "' + url + '" &')
+    os.system('curl --silent "' + url + '" &')
 
     sleep(interval)
