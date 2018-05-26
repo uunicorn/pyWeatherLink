@@ -1,16 +1,21 @@
 
 from communication import Link
-from time import sleep
+from time import sleep, strftime, gmtime
+from urllib import urlencode
+import wunderground
 import sys
+import os
 import sqlite3
-
-link = Link()
 
 if len(sys.argv) < 3:
     print 'Usage: update.py <file.sqlite3> <delay>'
     sys.exit(1)
 
+interval = int(sys.argv[2])
+
 db = sqlite3.connect(sys.argv[1])
+
+link = Link()
 
 while True:
     img=link.getSensorImage()
@@ -44,6 +49,24 @@ values (datetime('now'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     img.OutdoorDewpoint)) 
     db.commit()
 
-    print img
+    params=urlencode({
+        'ID': wunderground.stationid,
+        'PASSWORD': wunderground.password,
+        'dateutc': strftime("%Y-%m-%d %H:%M:%S", gmtime()),
+        'winddir': img.WindDirection,
+        'windspeedmph': img.AverageWindSpeedMPH,
+        'windgustmph': img.WindSpeedMPH,
+        'tempf': img.OutdoorTemperatureF,
+        'rainin': img.RainRate,
+        'baromin': img.QFEInHg,
+        'humidity': img.OutdoorRelativeHumidity,
+        'softwaretype': 'pyWeatherLink v0.0',
+        'action': 'updateraw',
+        'realtime': 1,
+        'rtfreq': interval
+    })
+    url='https://rtupdate.wunderground.com/weatherstation/updateweatherstation.php?' + params
+    
+    os.system('curl "' + url + '" &')
 
-    sleep(int(sys.argv[2]))
+    sleep(interval)

@@ -95,14 +95,19 @@ class Link:
             raise Exception("Start of block was not LOO")
             
         img = SensorImage()
-        img.WindSpeed = mph2kts(struct.unpack("<B", buf[14])[0])
-        img.AverageWindSpeed = mph2kts(struct.unpack("<B", buf[15])[0])
+        img.WindSpeedMPH = struct.unpack("<B", buf[14])[0]
+        img.WindSpeed = mph2kts(img.WindSpeedMPH)
+        img.AverageWindSpeedMPH = struct.unpack("<B", buf[15])[0]
+        img.AverageWindSpeed = mph2kts(img.AverageWindSpeedMPH)
         img.WindDirection = struct.unpack("<H", buf[16:18])[0]
-        img.IndoorTemperature = f2c(float(struct.unpack("<H", buf[9:11])[0])/10)
+        img.IndoorTemperatureF = float(struct.unpack("<H", buf[9:11])[0])/10
+        img.IndoorTemperature = f2c(img.IndoorTemperatureF)
         img.IndoorRelativeHumidity = struct.unpack("<B", buf[11])[0]
-        img.OutdoorTemperature = f2c(float(struct.unpack("<H", buf[12:14])[0])/10)
+        img.OutdoorTemperatureF = float(struct.unpack("<H", buf[12:14])[0])/10
+        img.OutdoorTemperature = f2c(img.OutdoorTemperatureF)
         img.OutdoorRelativeHumidity = struct.unpack("<B", buf[33])[0]
-        img.QFE = inHg2hPa(float(struct.unpack("<H", buf[7:9])[0])/1000.0)
+        img.QFEInHg = float(struct.unpack("<H", buf[7:9])[0])/1000.0
+        img.QFE = inHg2hPa(img.QFEInHg)
         img.QFETrend = struct.unpack("<b", buf[3])[0]
         img.Forecast = struct.unpack("<B", buf[89])[0]
         
