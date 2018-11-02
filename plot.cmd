@@ -62,7 +62,7 @@ plot "plot.dat" using 1:8 axes x1y1 title "Hourly" smooth unique lc 5 lw 0, \
 set key horizontal title ""
 set ylabel
 set y2label
-set xlabel "Time (NZDT)"
+set xlabel "Time (UTC)"
 set bmargin -1
 set yrange [*:*]
 unset y2tics; set ytics mirror autofreq

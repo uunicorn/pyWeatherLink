@@ -19,9 +19,9 @@ mkdir -p "$PERSISTENT"
 
 test -f "$AGG5MIN" || sqlite3 "$AGG5MIN" < schema.sql
 
-time python aggregate.py "$RAW" "$AGG5MIN" '-5 minute'
+python aggregate.py "$RAW" "$AGG5MIN" '-5 minute'
 
-time python render-report.py "$AGG5MIN" "$TEMP/report.png"
+python render-report.py "$AGG5MIN" "$TEMP/report.png"
 
 cd rose
 
@@ -49,3 +49,17 @@ sqlite3 -separator ' ' -nullvalue '?' "$AGG5MIN" \
     $FROM" > plot.dat
 
 gnuplot "$PYLINK/plot.cmd"
+
+#    -draw "image over 1200,50 0,0 'addtis.png'" 
+
+convert \
+    -size 1920x1080 \
+    xc:white \
+    -draw "image over 50,50   0,0 '24hrs_full_features.png'" \
+    -draw "image over 750,50  0,0 'rose.png'" \
+    -draw "image over 750,500 0,0 'report.png'" \
+    dashboard.png.new.png
+
+mv dashboard.png.new.png dashboard.png
+
+sqlite3 "$RAW" "delete from image where timestamp < datetime('now', '-3 day')"
